@@ -2,9 +2,14 @@ import React, {Component} from 'react';
 import '../App.css';
 
 class Fish extends Component {
-    render() {
+    handleClick = () => {
+        this.props.addToOrder(this.props.index);
+    };
 
+    render() {
         const {fish} = this.props;
+        const isAvailable = fish.status === 'available';
+
         return (
             <li className="menu-fish">
                 <img src={fish.image} alt=""/>
@@ -15,8 +20,8 @@ class Fish extends Component {
                 <p>
                     {fish.desc}
                 </p>
-                <button type="button">
-                    add to bag
+                <button type="button" disabled={!isAvailable} onClick={this.handleClick}>
+                    {isAvailable ? 'Add to bag' : 'Sold out'}
                 </button>
             </li>
         );

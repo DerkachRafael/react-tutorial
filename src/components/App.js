@@ -6,13 +6,11 @@ import Order from './Order'
 import * as testData from '../sample-fishes';
 import Fish from "./Fish";
 
-console.log(testData.default);
-
 class App extends Component {
 
     state = {
         fishes: {},
-        dataOrder: {}
+        order: {}
     };
 
     addFish = (fishOrder) => {
@@ -20,6 +18,23 @@ class App extends Component {
         fishes[`fish-${Date.now()}`] = fishOrder;
         this.setState({
             fishes
+        })
+    };
+
+    addToOrder = (key) =>{
+        const order = {...this.state.order};
+        // order[key] = {
+        //     'name': this.state.fishes[key].name,
+        //     'count': order[key] + 1 || 1,
+        //     'price': this.state.fishes[key].price + this.state.fishes[key].price || this.state.fishes[key].price,
+        // }
+        //     this.setState({
+        //         order
+        //     })
+        order[key] = order[key] + 1 || 1;
+
+        this.setState({
+            order
         })
     };
 
@@ -38,12 +53,12 @@ class App extends Component {
                     <Header tagline="Catch Of The Day"/>
                     <ul className="fish-list">
                         {
-                        Object.keys(this.state.fishes).map(key => <Fish fish={this.state.fishes[key]} /> )
+                        Object.keys(this.state.fishes).map(key => <Fish addToOrder={this.addToOrder} fish={this.state.fishes[key]} key={key} index={key}/> )
                         }
                     </ul>
                 </div>
-                <Order/>
-                <Inventory fish={this.addFish} loadSample={this.loadSample}/>
+                <Order order={this.state.order} fishes={this.state.fishes}/>
+                <Inventory fish={this.addFish} loadSample={this.loadSample} />
             </div>
         );
     }

@@ -4,7 +4,6 @@ import AddFishForm from "./AddFishForm";
 
 class Inventory extends Component {
     render() {
-        console.log(this.props);
         return (
             <div className="inventory">
               <AddFishForm fish={this.props.fish}/>

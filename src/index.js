@@ -3,4 +3,4 @@ import {render} from 'react-dom';
 import './css/style.css'
 import Router from "./components/Router";
 
-render( <Router /> , document.querySelector('#app'));
+render( <Router /> , document.querySelector('#main'));
