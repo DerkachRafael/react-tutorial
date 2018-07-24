@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import '../App.css';
 import {formatPrice} from "../helpers";
+import  _30s from '30-seconds-of-code'
 
 class Order extends Component {
 
@@ -8,6 +9,16 @@ class Order extends Component {
         const {fishes, order} = this.props;
         const fish = fishes[key];
         const count = order[key];
+
+        if(!fish) return null;
+        const isAvailable = fish && fish.status === 'available';
+        if(!isAvailable) {
+            return(
+                <li index={key}>
+                    sorry
+                </li>
+            )
+        }
             return(
                 <li key={key}>
                   {count} lbs {fish.name}
@@ -23,8 +34,8 @@ class Order extends Component {
         const totalPrice = orderId.reduce((prevTotal, key) => {
             const fish = fishes[key];
             const count = order[key];
-            console.log({fish}, {count})
-            const isAvailable = fish && fish.status;
+            const isAvailable = fish && fish.status === 'available';
+             
                 if(isAvailable) {
                     return prevTotal + count * fish.price;
                 }
@@ -41,9 +52,12 @@ class Order extends Component {
                 <ul className="order">
                     {orderId.map(this.renderOrder)}
                 </ul>
+               {
+                    _30s.size(order) > 0 ?
                 <span className="price">
-                    {formatPrice(totalPrice)}
-                </span>
+                Total: {formatPrice(totalPrice)}
+                </span> : "Your bag is empty" 
+            }
             </div>
         );
     }
