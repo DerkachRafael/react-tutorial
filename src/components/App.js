@@ -5,7 +5,8 @@ import Inventory from './Inventory'
 import Order from './Order'
 import * as testData from '../sample-fishes';
 import Fish from "./Fish";
-import {base} from '../base';
+import base from '../base';
+import PropTypes from 'prop-types'
 
 class App extends Component {
 
@@ -13,6 +14,11 @@ class App extends Component {
         fishes: {},
         order: {}
     };
+
+    static PropTypes = {
+        match: PropTypes.object, 
+    }
+
 
     addFish = (fishOrder) => {
         const fishes = {...this.state.fishes};
@@ -30,6 +36,15 @@ class App extends Component {
             this.setState({
                 fishes
             })
+    }
+
+    deleteFish= (key) =>{
+        const fishes = {...this.state.fishes};
+
+        fishes[key] = null;
+        this.setState({
+            fishes
+        })
     }
 
         componentDidMount() {
@@ -67,12 +82,23 @@ class App extends Component {
         })
     };
 
+    removeFromOrder = (key) =>{
+        const order = {...this.state.order};
+        delete order[key];
+
+        this.setState({
+            order
+        })
+    };
+
     loadSample = () => {
         this.setState({
             fishes: {...this.state.fishes, ...testData.default}
         })
 
     };
+
+   
 
     render() {
 
@@ -86,8 +112,17 @@ class App extends Component {
                         }
                     </ul>
                 </div>
-                <Order order={this.state.order} fishes={this.state.fishes}/>
-                <Inventory fish={this.addFish} loadSample={this.loadSample} fishes={this.state.fishes} updateFish={this.updateFish}/>
+                <Order 
+                    order={this.state.order} 
+                    removeFromOrder={this.removeFromOrder}
+                    fishes={this.state.fishes}/>
+                <Inventory 
+                    fish={this.addFish} 
+                    loadSample={this.loadSample} 
+                    fishes={this.state.fishes} 
+                    storeId={this.props.match.params.storeId}
+                    updateFish={this.updateFish} 
+                    deleteFish={this.deleteFish} />
             </div>
         );
     }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import '../App.css';
-
+import PropTypes from 'prop-types'
 function Header({tagline}) {
     return (
         <header className="top">
@@ -12,6 +12,10 @@ function Header({tagline}) {
             </h3>
         </header>
     );
+}
+
+Header.propTypes = {
+    tagline: PropTypes.string.isRequired
 }
 
 export default Header;

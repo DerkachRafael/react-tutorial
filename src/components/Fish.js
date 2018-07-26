@@ -1,7 +1,18 @@
 import React, {Component} from 'react';
 import '../App.css';
+import PropTypes from 'prop-types'
 
 class Fish extends Component {
+
+    static PropTypes = {
+        fish: PropTypes.shape({
+            color: PropTypes.string,
+            fontSize: PropTypes.number
+          }),
+        addToOrder: PropTypes.func
+    }
+
+
     handleClick = () => {
         this.props.addToOrder(this.props.index);
     };

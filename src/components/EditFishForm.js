@@ -8,7 +8,10 @@ class EditFishForm extends Component {
         }
 
         this.props.updateFish(this.props.index, updatedFish)
-        console.log(updatedFish);
+    }
+
+    deleteItem = () =>{
+        
     }
 
     render() {
@@ -42,7 +45,7 @@ class EditFishForm extends Component {
                         type="text"
                         placeholder="Image"
                 />
-                <button type="submit">+ Edit</button>
+                <button type="button" onClick={() => this.props.deleteFish(this.props.index) }>+ delete</button>
         </div>
              </React.Fragment>
         );
